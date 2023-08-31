@@ -16,7 +16,7 @@
         <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> 
         <script type="text/babel">
                 function HourMinuteConvert(){ // jsx 로 contain 할때는 위에 변수를 함수로만든뒤 합치는데함수명의첫글자를 대문자로 해야함 
-                const [amount, setAmount] = React.useState(false)
+                const [amount, setAmount] = React.useState("")
                 const [Flipped, setFlipped] = React.useState(false)
                 const onChange = (event) => {
                     setAmount(event.target.value);
@@ -54,14 +54,25 @@
                 function MILEKMConvert(){
                     return( <h2>MILE KM</h2>)
                 }
+                function Selected(){
+                    return( <h2>Please Select Units</h2>)
+                }
     function App(){ // jsx 로 contain 할때는 위에 변수를 함수로만든뒤 합치는데함수명의첫글자를 대문자로 해야함 
-        const [index,setIndex] = React.useState(0)   
-                 
+        const [index,setIndex] = React.useState("x")   
+        const onSelect = (event) => {
+            setIndex(event.target.value);
+        };
         return (
                 <div>
                     <h1>Super converter</h1>
-                    <HourMinuteConvert />
-                    <MILEKMConvert />
+                    <select value={index} onChange={onSelect}>
+                        <option value="x">Select Units</option>
+                        <option value="0">Minute To Hour</option>
+                        <option value="1">KM To Mile</option>
+                        </select>
+                        {index === "x" ? <Selected/> : null}
+                        {index === "0" ? <HourMinuteConvert/> : null}
+                        {index === "1" ? <MILEKMConvert/> : null}
                 </div>
                 )
     }
