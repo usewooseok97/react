@@ -15,22 +15,58 @@
         <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
         <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> 
         <script type="text/babel">
-            const root = document.getElementById("root");
-            function App(){
-                const [counter,setCounter] = React.useState(0); //React.useState는 배열을 만들어주는데(undefined,function)형식,
-                                                                 // 배열을 다른 배열로 받기 가능 const [zero,one] = [0,1]
-                const onClick = () =>{
-                    setCounter(counter + 1)                         //modifier(1234) == 
-                                                            // counter=1234 ,ReactDOM.render(<App/>, root)
+                function HourMinuteConvert(){ // jsx 로 contain 할때는 위에 변수를 함수로만든뒤 합치는데함수명의첫글자를 대문자로 해야함 
+                const [amount, setAmount] = React.useState(false)
+                const [Flipped, setFlipped] = React.useState(false)
+                const onChange = (event) => {
+                    setAmount(event.target.value);
                 }
-                   return (
+                const onReset = () => setAmount("");
+                const onFlip = () => { onReset();
+                    setFlipped(current => !current)}
+                    return (
                 <div>
-                    <span>Total click : {counter}</span>
-                    <button onClick={onClick}>BTN</button>
+                    <div>
+                        <label htmlFor="minute">minute</label>
+                        <input value={Flipped ? amount*60 : amount}id="minute" placeholder="minute" 
+                        type="number"onChange={onChange} disabled={Flipped} />
+                    </div>
+                    <div>
+                        <label htmlFor="hour">hour</label>
+                        <input
+                        value={Flipped ? amount : Math.floor(amount /60)} id="hour" 
+                        placeholder="hour" type="number" onChange={onChange}
+                        disabled={!Flipped} />
+                    </div>
+                    <div>
+                        <label htmlFor="hour">hour-minute</label>
+                        <input
+                        value={Flipped ? "" : amount % 60 } 
+                         type="number" onChange={onChange}
+                        disabled />
+                    </div>
+
+                    <button onClick={onReset}>reset</button>
+                    <button onClick={onFlip}>Flip</button>
                 </div>
                 )
-            }
+    }
+                function MILEKMConvert(){
+                    return( <h2>MILE KM</h2>)
+                }
+    function App(){ // jsx 로 contain 할때는 위에 변수를 함수로만든뒤 합치는데함수명의첫글자를 대문자로 해야함 
+        const [index,setIndex] = React.useState(0)   
+                 
+        return (
+                <div>
+                    <h1>Super converter</h1>
+                    <HourMinuteConvert />
+                    <MILEKMConvert />
+                </div>
+                )
+    }
+            const root = document.getElementById("root");
             ReactDOM.render(<App/>, root)
                 // jsx 로 contain 할때는 위에 변수를 함수로만든뒤 합치는데함수명의첫글자를 대문자로 해야함 
-                                </script>
+                </script>
 </html>
