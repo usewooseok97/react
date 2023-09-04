@@ -11,86 +11,47 @@
                 @babel 리엑트문법을 좀더 쉽게 JSX로 변환시킴 좀 느려짐
          -->
     </body>
-        <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>         
+        <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>         
         <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
         <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> 
+        <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
         <script type="text/babel">
-                function HourMinuteConvert(){ // jsx 로 contain 할때는 위에 변수를 함수로만든뒤 합치는데함수명의첫글자를 대문자로 해야함 
-                const [amount, setAmount] = React.useState("")
-                const [Flipped, setFlipped] = React.useState(false)
-                const onChange = (event) => {
-                    setAmount(event.target.value);
-                }
-                const onReset = () => setAmount("");
-                const onFlip = () => { onReset();
-                    setFlipped(current => !current)}
-                    return (
-                <div>
-                    <div>
-                        <label htmlFor="minute">minute</label>
-                        <input value={Flipped ? amount*60 : amount}id="minute" placeholder="minute" 
-                        type="number"onChange={onChange} disabled={Flipped} />
-                    </div>
-                    <div>
-                        <label htmlFor="hour">hour</label>
-                        <input
-                        value={Flipped ? amount : Number(amount / 60).toFixed(2)} id="hour" 
-                        placeholder="hour" type="number" onChange={onChange}
-                        disabled={!Flipped} />
-                    </div>
-                    <button onClick={onReset}>reset</button>
-                    <button onClick={onFlip}>Flip</button>
-                </div>
-                )
-    }
-                function MILEKMConvert(){
-                const [amount, setAmount] = React.useState("")
-                const [Flipped, setFlipped] = React.useState(false)
-                const onChange = (event)=> {
-                    setAmount(event.target.value)
-                }
-                const onFlip = () => setFlipped((current) => !current)
-                const Reset = () => setAmount("")
-                return(
-                <div>
-                    <div>
-                        <label htmlFor="mile">mile</label>
-                        <input type="number" id="mile" 
-                        onChange={onChange} value={Flipped ? Number(amount * 1.61).toFixed(2) : amount}
-                        disabled={Flipped}
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="Kilometer">Kilometer</label>
-                        <input type="number" id="Kilometer" 
-                        disabled={!Flipped}Number
-                        onChange={onChange} value={Flipped ? amount : Number(amount * 100 / 161).toFixed(2)}
-                        />
-                    </div>
-                    <button onClick={Reset}>Reset</button>
-                    <button onClick={onFlip}>Flip</button>
-                </div>
-                )
+            function Btn({text, ChangeWord,fontSize=14 ,Display}){
+        return <button 
+            onClick ={ChangeWord}
+            style={{
+            backgroundColor: "teal",
+            color: "white",
+            padding: "10px 20px",
+            border: 0,
+            borderRadius: "10px",
+            marginRight: "5px",
+            fontSize,
+            display: Display  ? "block" : "none" 
+          }}
+          >{ text } </button>
+          
             }
+        Btn.propTypes ={
+            text:PropTypes.string.isRequired,
+            fontSize:PropTypes.number
+        }
     function App(){ // jsx 로 contain 할때는 위에 변수를 함수로만든뒤 합치는데함수명의첫글자를 대문자로 해야함 
-        const [index,setIndex] = React.useState("x")   
-        const onSelect = (event) => {
-            setIndex(event.target.value);
-        };
-        return (
+        const [value , setValue] = React.useState("Save Button")
+        const [hden , setHden] = React.useState(false)
+        const ChangeValue = () => {
+            setValue("Revert Change")
+            setHden(current => !current)
+        }
+        return(
                 <div>
-                    <h1>Super converter</h1>
-                    <select value={index} onChange={onSelect}>
-                        <option value="x">Select Units</option>
-                        <option value="0">Minute To Hour</option>
-                        <option value="1">KM To Mile</option>
-                        </select>
-                        {index === "x" ? <h2>Please Select Units</h2> : null}
-                        {index === "0" ? <HourMinuteConvert/> : null}
-                        {index === "1" ? <MILEKMConvert/> : null}
+                <Btn text={value} ChangeWord={ChangeValue} fontSize={18} Display={!hden}/>
+                <Btn text={"hello"} ChangeWord={ChangeValue} fontSize={10} Display={hden} />
+                <Btn text={value + " OK?"} ChangeWord={ChangeValue} fontSize={10} Display={!hden}/>
                 </div>
-                )
-    }
+        )
+                    }
+                
             const root = document.getElementById("root");
             ReactDOM.render(<App/>, root)
                 // jsx 로 contain 할때는 위에 변수를 함수로만든뒤 합치는데함수명의첫글자를 대문자로 해야함 
