@@ -3,7 +3,8 @@ function App() {
   const [todo ,setTodo] = useState("");
   const [todos , setTodos] = useState([]);
   const onChange = (event) => setTodo(event.target.value);
-  const onClick  = index => setTodos(todos.filter((item, todoIndex) => index !== todoIndex));
+  const onClick  = index => setTodos(todos.filter((_, todoIndex) => index !== todoIndex));
+  // todos.filter는 인덱스와 골라진 인덱스번호와 같은 번호를 빼고 어레이를 출력하라
   const onSubmit = (event) => {
     event.preventDefault()
     if( todo === ""){
